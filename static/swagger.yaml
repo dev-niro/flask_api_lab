@@ -1,0 +1,85 @@
+swagger: '2.0'
+info:
+  title: Example API
+  version: '1.0'
+  description: API that uses an Excel file to manage users.
+host: localhost:5000
+schemes:
+  - http
+paths:
+  /usuarios:
+    get:
+      summary: Get all users
+      responses:
+        200:
+          description: A list of users
+    post:
+      summary: Add a new user
+      parameters:
+        - in: body
+          name: user
+          description: The user to create
+          schema:
+            type: object
+            required:
+              - id
+              - nombre
+              - email
+            properties:
+              id:
+                type: integer
+              nombre:
+                type: string
+              email:
+                type: string
+      responses:
+        201:
+          description: User added
+        400:
+          description: User already exists
+  /usuarios/{id}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+      responses:
+        200:
+          description: A single user
+        404:
+          description: User not found
+    put:
+      summary: Update a user by ID
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+        - in: body
+          name: user
+          schema:
+            type: object
+            properties:
+              nombre:
+                type: string
+              email:
+                type: string
+      responses:
+        200:
+          description: User updated
+        404:
+          description: User not found
+    delete:
+      summary: Delete a user by ID
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+      responses:
+        200:
+          description: User deleted
+        404:
+          description: User not found
